@@ -1,0 +1,14 @@
+{
+  "name": "Social-Network-API",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.17.2",
+    "mongoose": "^6.1.8",
+    "node": "^17.4.0"
+  },
+
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  }
+}
