@@ -1,6 +1,9 @@
+//Import Schema model and Types from mongoose
 const { Schema, model, Types } = require('mongoose');
+//Import date formater file
 const dateFormater = require('../utils/dateFormater');
 
+//Reaction Schema (Sub Document)
 const ReactionSchema = new Schema(
     {
         reactionId: {
@@ -20,6 +23,7 @@ const ReactionSchema = new Schema(
         createdAt: {
             type: Date,
             default: Date.now,
+            //User formatter to fix the date
             get: createdAtDate => dateFormater(createdAtDate)
         }
     },
@@ -29,7 +33,7 @@ const ReactionSchema = new Schema(
         }
     }
 );
-
+//Thought Schema 
 const ThoughtSchema = new Schema(
     {
         username: {
@@ -46,8 +50,10 @@ const ThoughtSchema = new Schema(
         createdAt: {
             type: Date,
             default: Date.now,
+            //Use formater again to fix the date
             get: createdAtDate => dateFormater(createdAtDate)
         },
+        //Reactions array that references Reaction Schema
         reactions: [ReactionSchema]
     },
     {
@@ -59,13 +65,15 @@ const ThoughtSchema = new Schema(
     }
 );
 
+//Virtual to get number of reactions to a thought
 ThoughtSchema.virtual('reactionCount').get(function () {
     return this.reactions.length;
 });
 
+//Variable to hold our Thought model
 const Thought = model('Thought', ThoughtSchema);
 
 
 
-
+//Export the Thought model
 module.exports = Thought

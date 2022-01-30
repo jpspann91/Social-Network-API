@@ -1,3 +1,4 @@
+//Data Formater code taken from Stack OVerflow
 const addDateSuffix = date => {
     let dateString = date.toString();
 
@@ -20,13 +21,13 @@ const addDateSuffix = date => {
     return dateString   
 }
 
-module.exports = (
-    timestamp,
-    {monthLength = 'short', dateSuffix = true} = {}
-) => {
+//export this function that takes a timestamp and an object
+module.exports = ( timestamp, {monthLength = 'short', dateSuffix = true} = {}) => {
     let months; 
 
+    //IF month length is short
     if(monthLength === 'short'){
+        //User shortened version of month
         months = {
             0: 'Jan',
             1: 'Feb',
@@ -42,6 +43,7 @@ module.exports = (
             11: 'Dec'
           };
     }else{
+        //If NOT short then use long version of the month
         months = {
             0: 'January',
             1: 'February',
@@ -58,19 +60,26 @@ module.exports = (
           };
     }
 
+    //Date Object used with timestamp passed into the function
     const dateObject = new Date(timestamp);
+    //Get the month formatted
     const formattedMonth = months[dateObject.getMonth()];
 
+    //Day of month
     let dayOfMonth;
 
+    
     if(dateSuffix){
         dayOfMonth = addDateSuffix(dateObject.getDate());
     }else{
         dayOfMonth = dateObject.getDate();
     }
 
+    //Year 
     const year = dateObject.getFullYear();
 
+
+    //Hour
     let hour;
 
     if(dateObject.getHours > 12){
@@ -83,8 +92,11 @@ module.exports = (
         hour = 12;
     }
 
+    //Minutes
     const minutes = dateObject.getMinutes();
 
+
+    //AM or PM
     let periodOfDay; 
 
     if(dateObject.getHours() >= 12){
@@ -93,7 +105,9 @@ module.exports = (
         periodOfDay = 'am'
     }
 
+    //Format the whole thing
     const formattedTime = `${formattedMonth} ${dayOfMonth}, ${year} at ${hour}: ${minutes} ${periodOfDay}`
 
+    //Return formatted string
     return formattedTime;
 }

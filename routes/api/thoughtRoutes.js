@@ -1,7 +1,7 @@
 //Require router() from express framework
 const router = require('express').Router();
 
-//Create an object with all of our controller methods imported from controllers folder
+//Import route functionality from our controllers
 const {
     getAllThoughts,
     getThoughtById,
