@@ -1,17 +1,18 @@
 const express = require('express');
 const db = require('./config/connection');
-const app = express();
-const routes = require('./routes')
+const routes = require('./routes');
+
+const cwd = process.cwd();
+
 const PORT = process.env.PORT || 3001;
+const app = express();
 
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
-app.use(express.static('public'));
-
 app.use(routes);
 
-db.once('open', ()=>{
-    app.listen(PORT, () => {
-        console.log(`******Connected to localhost: ${PORT} ********`)
-    });
+db.once('open',() => {
+  app.listen(PORT, () => {
+    console.log(`Running on port ${PORT}!`);
+  });
 })
