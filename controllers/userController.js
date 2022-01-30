@@ -62,11 +62,13 @@ const userController = {
     deleteUser(req, res) {
         User.findOneAndDelete({ _id: req.params.id })
             .then((userDataDb) => {
+                console.log(userDataDb);
                 if (!userDataDb) {
                     res.status(404).json({ message: "No user with that ID!" })
                     return;
                 }//When user is deleted, update all users where this friend exists
                 User.updateMany(
+                    
                     {_id: {$in: userDataDb.friends}},
                     {$pull: {friends: req.params.id}}
                 )

@@ -13,7 +13,7 @@ const thoughtController = {
     },
     getThoughtById(req, res) {
         console.log("Paramaters sent: ", req.params)
-        Thought.findOne({ thoughtId: req.params.id })
+        Thought.findOne({ _id: req.params.thoughtId })
             .select('-__v')
             .then((thoughtData) => {
                 if (!thoughtData) {
@@ -31,6 +31,7 @@ const thoughtController = {
         console.log('BODY OBJECT:', req.body)
         Thought.create(req.body)
             .then(({ _id }) => {
+                console.log(_id);
                 return User.findOneAndUpdate(
                     { _id: req.params.userId },
                     { $push: { thoughts: _id } },
